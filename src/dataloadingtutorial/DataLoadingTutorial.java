@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,14 +18,12 @@ public class DataLoadingTutorial
 
     public static void saveData(ArrayList<String> data, String filePath)
     {
-        try
+        try (PrintWriter writer = new PrintWriter(filePath, StandardCharsets.UTF_8.name()))
         {
-            PrintWriter writer = new PrintWriter(filePath, "UTF-8");
             for (String line : data)
             {
                 writer.println(line);
             }
-            writer.close();
         }
         catch (FileNotFoundException | UnsupportedEncodingException ex)
         {

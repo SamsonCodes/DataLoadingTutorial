@@ -43,10 +43,6 @@ public class DataLoadingTutorial
                 loadedData.add(line);
             }
         }
-        catch (FileNotFoundException ex)
-        {
-            Logger.getLogger(DataLoadingTutorial.class.getName()).log(Level.SEVERE, null, ex);
-        }
         catch (IOException ex)
         {
             Logger.getLogger(DataLoadingTutorial.class.getName()).log(Level.SEVERE, null, ex);

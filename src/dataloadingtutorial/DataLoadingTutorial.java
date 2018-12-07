@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -59,6 +61,18 @@ public class DataLoadingTutorial
         for (String line : loadData(PATH + "test.txt"))
         {
             System.out.println(line);
+        }
+
+        // Alternative: Java 8 way with Streams
+        try
+        {
+            System.out.println("");
+            System.out.println("Inhoud:");
+            Files.lines(Paths.get(PATH + "test.txt")).forEach(System.out::println);
+        }
+        catch (IOException ex)
+        {
+            Logger.getLogger(DataLoadingTutorial.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

@@ -35,11 +35,8 @@ public class DataLoadingTutorial
     public static ArrayList<String> loadData(String filePath)
     {
         ArrayList<String> loadedData = new ArrayList();
-        FileReader fileReader;
-        try
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath)))
         {
-            fileReader = new FileReader(filePath);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
             String line;
             while ((line = bufferedReader.readLine()) != null)
             {

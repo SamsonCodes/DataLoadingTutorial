@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dataloadingtutorial;
 
 import java.io.BufferedReader;
@@ -11,6 +6,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,14 +20,12 @@ public class DataLoadingTutorial
 
     public static void saveData(ArrayList<String> data, String filePath)
     {
-        try
+        try (PrintWriter writer = new PrintWriter(filePath, StandardCharsets.UTF_8.name()))
         {
-            PrintWriter writer = new PrintWriter(filePath, "UTF-8");
             for (String line : data)
             {
                 writer.println(line);
             }
-            writer.close();
         }
         catch (FileNotFoundException | UnsupportedEncodingException ex)
         {
@@ -40,20 +36,13 @@ public class DataLoadingTutorial
     public static ArrayList<String> loadData(String filePath)
     {
         ArrayList<String> loadedData = new ArrayList();
-        FileReader fileReader;
-        try
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath)))
         {
-            fileReader = new FileReader(filePath);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
             String line;
             while ((line = bufferedReader.readLine()) != null)
             {
                 loadedData.add(line);
             }
-        }
-        catch (FileNotFoundException ex)
-        {
-            Logger.getLogger(DataLoadingTutorial.class.getName()).log(Level.SEVERE, null, ex);
         }
         catch (IOException ex)
         {
@@ -72,6 +61,18 @@ public class DataLoadingTutorial
         for (String line : loadData(PATH + "test.txt"))
         {
             System.out.println(line);
+        }
+
+        // Alternative: Java 8 way with Streams
+        try
+        {
+            System.out.println("");
+            System.out.println("Inhoud:");
+            Files.lines(Paths.get(PATH + "test.txt")).forEach(System.out::println);
+        }
+        catch (IOException ex)
+        {
+            Logger.getLogger(DataLoadingTutorial.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
